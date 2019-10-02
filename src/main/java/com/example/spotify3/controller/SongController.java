@@ -11,11 +11,12 @@ public class SongController {
 
     @Autowired
     SongService songService;
-
+    //create songs
     @PostMapping
     public Song createSong(@RequestBody Song song) {
         return songService.createSong(song);
     }
+    //get list of songs
     @GetMapping("/list")
     public Iterable<Song> listSongs(){
         return songService.listSongs();

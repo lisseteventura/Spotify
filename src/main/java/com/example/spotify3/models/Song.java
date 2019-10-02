@@ -18,14 +18,6 @@ public class Song {
     @Column
     private int length;
 
-    //mapping Song table to User table
-//    @ManyToMany(fetch = FetchType.LAZY,
-//            cascade = {CascadeType.DETACH,
-//                    CascadeType.MERGE, CascadeType.REFRESH})
-//    @JoinTable(name = "users",
-//            joinColumns = {@JoinColumn(name = "song_id")},
-//            inverseJoinColumns = @JoinColumn(name = "users_id"))
-//    private List<User> users;
 
     public Song() {}
 
@@ -53,4 +45,15 @@ public class Song {
         this.length = length;
     }
 
+    //mapping Song table to User table
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH,
+                    CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "user_songs",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = @JoinColumn(name = "songs_id"))
+    private List<User> users;
+    public List<User> getUsers(){ return users; }
+
+    public void setUsers(List<User> users) { this.users = users; }
 }

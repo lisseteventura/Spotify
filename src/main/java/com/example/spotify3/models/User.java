@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIdentityInfo(
@@ -24,14 +25,6 @@ public class User {
     @Column
     private String password;
 
-    //mapping User table to Song table
-//    @ManyToMany(fetch = FetchType.LAZY,
-//            cascade = {CascadeType.DETACH,
-//                    CascadeType.MERGE, CascadeType.REFRESH})
-//    @JoinTable(name = "song",
-//            joinColumns = {@JoinColumn(name = "users_id")},
-//            inverseJoinColumns = @JoinColumn(name = "song_id"))
-//    private List<Song> song;
 
     public User() {}
 
@@ -68,5 +61,29 @@ public class User {
     public UserRole getUserRole() { return userRole; }
 
     public void setUserRole(UserRole userRole) { this.userRole = userRole; }
+
+    //mapping User table to Song table
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH,
+                    CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "user_songs",
+            joinColumns = {@JoinColumn(name = "songs_id")},
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<Song> songs;
+    public List<Song> getSongs(){ return songs; }
+    public void setSongs(List<Song> songs) { this.songs = songs; }
+
+    //this allows user to add songs to their profile
+    public List<Song> addSong(Song song){
+        if(songs == null)
+            songs = new ArrayList<>();
+        songs.add(song);
+
+        return songs;
+    }
+
+
+
+
 
 }
