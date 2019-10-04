@@ -27,7 +27,7 @@ public class UserController {
         return userService.login(username, password);
     }
     //used to delete users from table
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/admin/user/{userId}")
     public void deleteUserById(@PathVariable Long userId) {
         userService.deleteById(userId);
     }
@@ -42,7 +42,7 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody User user) {
         return ResponseEntity.ok(new JwtResponse(userService.login(user)));
     }
-
+    //updated sign up so that user can automatically receive token
     @PostMapping("/signup")
     public ResponseEntity<?> createUser(@RequestBody User newUser) {
         return ResponseEntity.ok(new JwtResponse(userService.createUser(newUser)));

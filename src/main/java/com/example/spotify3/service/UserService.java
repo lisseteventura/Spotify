@@ -12,6 +12,7 @@ public interface UserService extends UserDetailsService {
     public String createUser(User newUser);
     public User login(String username, String password);
     public void deleteById(Long userId);
+    //user can add songs
     public User addSong(String username, Long songId);
     public User getUser(String username);
     //method used when user logs in and will get a token
